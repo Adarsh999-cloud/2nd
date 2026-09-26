@@ -176,25 +176,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getContactsList() {
         let talkoUsers = JSON.parse(localStorage.getItem('talkoUsers')) || [];
-        
-        // LocalStorage-il users illenkil DEFAULT BOTS use cheyyuka
-        if (talkoUsers.length === 0) {
-            talkoUsers = typeof defaultBots !== 'undefined' ? defaultBots : [
-                { id: 'bot-1', name: 'Talko AI Bot 🤖', status: 'Online', avatar: '🤖' },
-                { id: 'bot-2', name: 'Rahul V', status: 'Online', avatar: 'R' },
-                { id: 'bot-3', name: 'Ananya S', status: 'Offline', avatar: 'A' }
-            ];
-        }
 
-        // Current User-ne ozhivaki baki ullavare edukkuka
-        let list = talkoUsers.filter(u => String(u.id || u.username || u.phone) !== String(currentUserId));
+        // LocalStorage-ile users-um defaultBots array-yum combine cheyyunnu
+        let combined = [...defaultBots, ...talkoUsers];
 
-        return list.map((c, idx) => {
-            if (!c.status) {
-                c.status = (idx % 2 === 0) ? 'Online' : 'Offline';
-            }
-            return c;
-        });
+        // Unique ID/Username vach duplicate ozhivakkunnu
+        let uniqueContacts = Array.from(
+            new Map(combined.map(item => [item.id || item.username, item])).values()
+        );
+
+        // Current logged-in user-ne list-il ninnu filter cheyyunnu
+        let list = uniqueContacts.filter(u => String(u.id || u.username) !== String(currentUserId));
+
+        return list;
     }
 
     function loadProfileUI() {
@@ -369,36 +363,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. CHAT & CONTACTS LOGIC ---
     const chatList = document.getElementById('chatList');
 
-    function renderContacts() {
-        if (!chatList) return;
-        chatList.innerHTML = '';
+    // --- UPDATED RENDER CONTACTS ---
+    function renderContacts() {
+        if (!chatList) return;
+        chatList.innerHTML = '';
 
-        const contacts = getContactsList();
+        // Default bots + localStorage contact list merge
+        const contacts = getContactsList();
 
-        contacts.forEach((contact) => {
-            const contactId = contact.id || contact.username;
-            const item = document.createElement('div');
-            item.className = `chat-item ${activeChatId === contactId ? 'active' : ''}`;
+        if (contacts.length === 0) {
+            chatList.innerHTML = '<div style="padding:15px; color:#888;">No contacts found.</div>';
+            return;
+        }
 
-            const isOnline = String(contact.status).toLowerCase() === 'online';
-            const statusColor = isOnline ? '#22c55e' : '#9ca3af';
-            
-            const avatarContent = contact.avatarImg 
-                ? `<img src="${contact.avatarImg}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />` 
-                : (contact.avatar || (contact.name ? contact.name.charAt(0).toUpperCase() : 'U'));
+        contacts.forEach((contact) => {
+            const contactId = contact.id || contact.username;
+            const item = document.createElement('div');
+            item.className = `chat-item ${activeChatId === contactId ? 'active' : ''}`;
 
-            item.innerHTML = `
-                <div class="avatar">${avatarContent}</div>
-                <div class="chat-item-details">
-                    <div class="chat-item-name">${escapeHTML(contact.name || contact.username)}</div>
-                    <div class="chat-item-status status" style="color: ${statusColor} !important;">${escapeHTML(contact.status)}</div>
-                </div>
-            `;
-            
-            item.addEventListener('click', () => selectChat(contact));
-            chatList.appendChild(item);
-        });
-    }
+            const isOnline = String(contact.status).toLowerCase() === 'online';
+            const statusColor = isOnline ? '#22c55e' : '#9ca3af';
+            
+            const avatarContent = contact.avatarImg 
+                ? `<img src="${contact.avatarImg}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />` 
+                : (contact.avatar || (contact.name ? contact.name.charAt(0).toUpperCase() : 'U'));
+
+            item.innerHTML = `
+                <div class="avatar">${avatarContent}</div>
+                <div class="chat-item-details">
+                    <div class="chat-item-name">${escapeHTML(contact.name || contact.username)}</div>
+                    <div class="chat-item-status status" style="color: ${statusColor} !important;">${escapeHTML(contact.status || 'Offline')}</div>
+                </div>
+            `;
+            
+            item.addEventListener('click', () => selectChat(contact));
+            chatList.appendChild(item);
+        });
+    }
 
     function selectChat(contact) {
         if (!contact) return;
@@ -640,9 +641,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial Render
     // Initial Render & Auto-select First Chat
+    // Render contacts and automatically select the first bot/chat
+    // --- INITIAL RENDER & FORCED MOBILE DISPLAY ---
+    if (chatListContainer) {
+        chatListContainer.style.display = 'block'; // Mobile-il hide aayaal display aakkan
+    }
+
     renderContacts();
-    const availableContacts = getContactsList();
-    if (availableContacts.length > 0) {
-        selectChat(availableContacts[0]);
+    
+    const initialContacts = getContactsList();
+    if (initialContacts.length > 0) {
+        selectChat(initialContacts[0]);
     }
 });

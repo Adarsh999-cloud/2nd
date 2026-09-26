@@ -171,10 +171,13 @@ body {
 }
 
 /* --- MOBILE RESPONSIVE FIX (FULL SCREEN SIDEBAR ON MOBILE) --- */
-@media screen and (max-width: 768px) {
-    .app-container {
-        position: relative;
+@media (max-width: 768px) {
+    /* Sidebar mobile-ൽ full screen അഥവാ visible ആണെന്ന് ഉറപ്പാക്കുക */
+    .sidebar, #chatListContainer {
+        display: block !important;
+        width: 100%;
     }
+
 
     .sidebar {
         width: 100% !important;
