@@ -55,6 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatListContainer = document.getElementById('chatListContainer') || document.getElementById('chatList');
     const statusGridContainer = document.getElementById('statusGridContainer');
 
+
+    // Mobile Check & Desktop Mode Alert
+(function checkMobileView() {
+    // Screen width 768px-il thazheyaano enn check cheyyunnu
+    const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        alert("⚠️ This site works best in Desktop Mode!\n\nPlease open your browser menu (⋮ / 💬) and check 'Desktop site' for the best experience.");
+    }
+})();
+
     if (navStatusBtn && statusGridContainer) {
         navStatusBtn.addEventListener('click', () => {
             if (navChatsBtn) navChatsBtn.classList.remove('active');
