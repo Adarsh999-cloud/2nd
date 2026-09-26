@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talko - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <!-- FontAwesome Icons for UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- LEFT SIDEBAR: Navigation, Profile & Contacts -->
+        <aside class="sidebar">
+
+            <!-- Profile Header -->
+            <div class="sidebar-header">
+                <div class="user-profile-wrapper" style="position: relative;">
+                    <div class="user-profile" id="userProfileBtn" style="cursor: pointer;">
+                        <div class="avatar" id="myAvatar">U</div>
+                        <span id="currentUserName">User</span>
+                    </div>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown" class="dropdown-menu hidden">
+                        <button id="optChangeName">✏️ Change Name</button>
+                        <button id="optChangePic">🖼️ Change Profile Picture</button>
+                        <button id="optBlockedUsers">🚫 Blocked Accounts</button>
+                    </div>
+                </div>
+
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+
+                <button id="logoutBtn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+
+            <!-- Search Contacts -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchContact" placeholder="Search chats...">
+            </div>
+
+            <!-- Single Chat List Container -->
+            <div class="chat-list" id="chatList">
+                <!-- Dynamic Contacts loaded from dashboard.js -->
+            </div>
+        </aside>
+
+        <!-- RIGHT MAIN CONTENT AREA -->
+        <main class="main-content">
+            <div class="mesh-blob blob-1"></div>
+            <div class="mesh-blob blob-2"></div>
+            <div class="mesh-blob blob-3"></div>
+            <div class="mesh-blob blob-4"></div>
+
+            <!-- 1. CHAT MESSAGES VIEW (Default Panel) -->
+            <div id="chatMessageView" class="view-panel">
+                <div class="chat-header" id="chatHeader">
+                    <div class="chat-user-info">
+                        <div class="avatar" id="activeChatAvatar">T</div>
+                        <div>
+                            <h3 id="activeChatName">Select a contact</h3>
+                            <span class="status" id="activeChatStatus">Online</span>
+                        </div>
+                    </div>
+
+                    <div class="chat-header-actions">
+                        <button id="voiceCallBtn" class="action-btn" title="Voice Call">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button id="videoCallBtn" class="action-btn" title="Video Call">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <div class="chat-menu-container">
+                            <button id="menuBtn" class="menu-btn">⋮</button>
+                            <div id="chatDropdown" class="chat-dropdown hidden">
+                                <button id="clearChatBtn">🗑️ Clear Chat</button>
+                                <button id="blockUserBtn">🚫 Block User</button>
+                                <button id="reportUserBtn">⚠️ Report User</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <div class="welcome-msg">Select a chat to start messaging on Talko</div>
+                </div>
+
+                <form class="chat-input-area" id="chatForm">
+                    <label for="imageInput" class="image-upload-btn" title="Send Image">📷</label>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+
+                    <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
+                    <button type="submit" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Blocked Accounts Modal Pop-up -->
+    <div id="blockedModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Blocked Accounts</h3>
+            <ul id="blockedList"></ul>
+            <button id="closeBlockedModal">Close</button>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

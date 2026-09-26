@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talko - Login</title>
+    <link rel="stylesheet" href="./login.css">
+    <!-- Font Awesome Icons Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Main Outer Wrapper for Side-by-Side Alignment -->
+    <div class="page-wrapper">
+        
+        <!-- Left Section Container -->
+        <div class="left-section">
+            <h1 class="left-heading">Talko-Connect With Friends</h1>
+            <p class="left-para">Share your best moments and stay connected with the world.</p>
+            <div class="left-image-container">
+                <img src="chat.webp" alt="Talko Showcase" class="left-img">
+            </div>
+        </div>
+
+        <!-- Right Section Container (Login Box + Signup Box) -->
+        <div class="right-section">
+            <!-- Main Login Box -->
+            <div class="login-box">
+                <!-- Instagram Text Logo -->
+                <div class="logo">
+                    <img src="tlko.png" alt="Talko Logo">
+                </div>
+
+                <!-- Login Form -->
+                <!-- LOGIN FORM -->
+<form id="loginForm">
+    <div class="input-field icon-field">
+        <i class="fa-solid fa-user input-icon"></i>
+        <input type="text" id="username" placeholder="Phone number, Username, or Email">
+    </div>
+    <small id="usernameError" class="error-msg"></small>
+
+    <div class="input-field1">
+        <div class="input-field password-container icon-field">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="password" placeholder="Password">
+            <button type="button" id="togglePassword">Show</button>
+        </div>
+    </div>
+    <small id="passwordError" class="error-mssg"></small>
+    
+    <button type="submit" id="loginBtn" class="login-btn">Log In</button>
+</form>
+
+<!-- SIGN UP FORM -->
+<form id="signupForm" class="hidden">
+    <p class="signup-text">Sign up to see photos and videos from your friends.</p>
+
+    <!-- Mobile/Email: Mobile Phone Icon -->
+    <div class="input-field icon-field">
+        <i class="fa-solid fa-mobile-screen-button input-icon"></i>
+        <input type="text" id="signupUsername" class="input-sign" placeholder="Mobile Number or Email">
+    </div>
+    <small id="signupUsernameError" class="error-msg"></small>
+
+    <!-- Full Name: Id Card / User Icon -->
+    <div class="input-field icon-field">
+        <i class="fa-solid fa-id-card input-icon78"></i>
+        <input type="text" id="fullName" class="input-sign-up" placeholder="Full Name">
+    </div>
+    <small id="signupErrorFullname" class="error-msg"></small>
+
+    <!-- Password: Lock Icon -->
+    <div class="input-field password-container icon-field">
+        <i class="fa-solid fa-lock input-icon89"></i>
+        <input type="password" id="signupPassword" class="password-input" placeholder="Password">
+    </div>
+    <small id="signupPasswordError" class="error-msg"></small>
+
+    <button type="submit" id="signupBtn" class="signup-btn">Sign Up</button>
+</form>
+
+                <div class="divider">
+                    <div class="line"></div>
+                    <div class="or">OR</div>
+                    <div class="line"></div>
+                </div>
+
+                <div class="fb-login">
+                    <a href="#">Log in with Facebook</a>
+                </div>
+
+                <a href="#" class="forgot-password" id="forgotPassBtn">Forgot password?</a>
+            </div>
+
+            <!-- Sign Up Box -->
+            <!-- Bottom Switch Link Container -->
+               <div class="signup-box">
+                <p>
+                    <span id="toggleText">Don't have an account?</span> 
+                    <a href="#" id="switchBtn">Sign up</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+<div id="forgotModal" class="modal hidden">
+    <div class="modal-content">
+        <span id="closeForgotModal" class="close-btn">&times;</span>
+        <h2>Reset Password</h2>
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">Enter registered 10-digit mobile number to reset password.</p>
+        
+        <form id="forgotForm">
+            <div class="input-group">
+                <input type="tel" id="forgotMobile" placeholder="10-digit Mobile Number" maxlength="10" required>
+                <small class="error-msg" id="forgotMobileError"></small>
+            </div>
+            <div class="input-group">
+                <input type="password" id="forgotNewPass" placeholder="New Password (min 6 chars)" required>
+                <small class="error-msg" id="forgotPassError"></small>
+            </div>
+            <button type="submit" id="resetPassBtn" class="btn primary-btn">Update Password</button>
+        </form>
+    </div>
+</div>
+</body>
+<script src="./login.js"></script>
+</html>
