@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('currentUser');
-            window.location.replace('login.html');
+            window.location.replace('index.html');
         });
     }
 
