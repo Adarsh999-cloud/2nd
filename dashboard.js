@@ -164,24 +164,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getContactsList() {
-        let talkoUsers = JSON.parse(localStorage.getItem('talkoUsers')) || [];
-        const defaultContacts = [
-            { id: '1', name: 'Talko AI Bot 🤖', status: 'Online', avatar: '🤖' },
-            { id: '2', name: 'Rahul V', status: 'Online', avatar: 'R' },
-            { id: '3', name: 'Ananya S', status: 'Offline', avatar: 'A' }
-        ];
+        let talkoUsers = JSON.parse(localStorage.getItem('talkoUsers')) || [];
+        
+        // LocalStorage-il users illenkil DEFAULT BOTS use cheyyuka
+        if (talkoUsers.length === 0) {
+            talkoUsers = typeof defaultBots !== 'undefined' ? defaultBots : [
+                { id: 'bot-1', name: 'Talko AI Bot 🤖', status: 'Online', avatar: '🤖' },
+                { id: 'bot-2', name: 'Rahul V', status: 'Online', avatar: 'R' },
+                { id: 'bot-3', name: 'Ananya S', status: 'Offline', avatar: 'A' }
+            ];
+        }
 
-        let list = talkoUsers.length > 0 
-            ? talkoUsers.filter(u => String(u.username || u.phone) !== String(currentUserId))
-            : defaultContacts;
+        // Current User-ne ozhivaki baki ullavare edukkuka
+        let list = talkoUsers.filter(u => String(u.id || u.username || u.phone) !== String(currentUserId));
 
-        return list.map((c, idx) => {
-            if (!c.status) {
-                c.status = (idx % 2 === 0) ? 'Online' : 'Offline';
-            }
-            return c;
-        });
-    }
+        return list.map((c, idx) => {
+            if (!c.status) {
+                c.status = (idx % 2 === 0) ? 'Online' : 'Offline';
+            }
+            return c;
+        });
+    }
 
     function loadProfileUI() {
         const userName = currentUser.name || currentUser.username || 'User';
@@ -625,5 +628,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initial Render
-    renderContacts();
+    // Initial Render & Auto-select First Chat
+    renderContacts();
+    const availableContacts = getContactsList();
+    if (availableContacts.length > 0) {
+        selectChat(availableContacts[0]);
+    }
 });
