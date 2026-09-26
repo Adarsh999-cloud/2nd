@@ -114,68 +114,88 @@ body {
 
 /* Chat List */
 /* --- COMPACT CHAT ITEM LAYOUT --- */
+/* --- APP CONTAINER & LAYOUT FIX --- */
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- SIDEBAR WIDTH FIX FOR DESKTOP & LAPTOP --- */
+.sidebar {
+    width: 320px !important;       /* Laptop-il text cut aavathe irikkan proper width */
+    min-width: 300px !important;
+    max-width: 350px !important;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- COMPACT CHAT ITEM LAYOUT --- */
 .chat-list {
+    flex: 1;
     overflow-y: auto;
-    max-height: calc(100vh - 120px);
 }
 
 .chat-item {
     display: flex !important;
     align-items: center !important;
-    padding: 8px 12px !important;
-    min-height: 52px !important;
-    height: auto !important;
-    gap: 10px !important;
+    padding: 10px 14px !important;  /* Balanced padding */
+    min-height: 60px !important;    /* Gap & height fix */
+    gap: 12px !important;
     cursor: pointer;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .chat-item .avatar {
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 14px !important;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 15px !important;
     flex-shrink: 0 !important;
 }
 
-.chat-item-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-}
-
 .chat-item-name {
-    font-size: 13.5px !important;
+    font-size: 14px !important;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;        /* Text cut aakathe 3 dots aakkum */
 }
 
-.chat-item-status {
-    font-size: 11px !important;
-}
-
-/* --- MOBILE RESPONSIVE FIX --- */
+/* --- MOBILE RESPONSIVE FIX (FULL SCREEN SIDEBAR ON MOBILE) --- */
 @media screen and (max-width: 768px) {
     .app-container {
-        flex-direction: column;
+        position: relative;
     }
 
     .sidebar {
         width: 100% !important;
+        min-width: 100% !important;
         max-width: 100% !important;
-        height: auto !important;
+        height: 100% !important;
+    }
+
+    .main-content {
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .chat-item {
-        padding: 6px 10px !important;
-        min-height: 46px !important;
+        padding: 8px 12px !important;
+        min-height: 54px !important;
     }
 
     .chat-item .avatar {
-        width: 32px !important;
-        height: 32px !important;
+        width: 36px !important;
+        height: 36px !important;
     }
 }
 
