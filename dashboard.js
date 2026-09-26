@@ -363,6 +363,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. CHAT & CONTACTS LOGIC ---
     const chatList = document.getElementById('chatList');
 
+const chatHeader = document.getElementById('chatHeader');
+const appContainer = document.querySelector('.app-container');
+
+if (chatHeader && appContainer) {
+
+    const mobileBackBtn = document.createElement('button');
+
+    mobileBackBtn.className = 'mobile-back-btn';
+    mobileBackBtn.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+    mobileBackBtn.title = 'Back to chats';
+
+    mobileBackBtn.addEventListener('click', () => {
+        appContainer.classList.remove('mobile-chat-open');
+        activeChatId = null;
+    });
+
+    chatHeader.appendChild(mobileBackBtn);
+}
+
     // --- UPDATED RENDER CONTACTS ---
     function renderContacts() {
         if (!chatList) return;
@@ -402,8 +421,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectChat(contact) {
-        if (!contact) return;
-        activeChatId = contact.id || contact.username;
+    if (!contact) return;
+
+    activeChatId = contact.id || contact.username;
+
+    // Open selected chat as full screen on mobile
+    if (window.innerWidth <= 768) {
+        document.querySelector('.app-container')
+            ?.classList.add('mobile-chat-open');
+    }
+
         
         // Highlight active sidebar contact
         const allItems = document.querySelectorAll('.chat-item');
@@ -650,7 +677,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderContacts();
     
     const initialContacts = getContactsList();
-    if (initialContacts.length > 0) {
-        selectChat(initialContacts[0]);
-    }
+
+if (initialContacts.length > 0 && window.innerWidth > 768) {
+    selectChat(initialContacts[0]);
+}
 });
